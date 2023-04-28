@@ -3,7 +3,7 @@
 
 <head>
 	<meta charset="UTF-8">
-	<title>Diabetes Predictor</title>
+	<title>Know Your Diabetes</title>
 	<link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
 	<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
 	<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
@@ -54,7 +54,7 @@
 		.btn.active,
 		.btn.disabled,
 		.btn[disabled] {
-			background-color: #9ba38b;
+			background-color: #7c9154;
 		}
 
 
@@ -63,8 +63,8 @@
 			color: white;
 			border-style: outset;
 			border-color: #0066A2;
-			height: 50px;
-			width: 100px;
+			height: 40px;
+			width: 195px;
 			font: bold15px arial, sans-serif;
 			text-shadow: none;
 		}
@@ -74,11 +74,12 @@
 			padding: 9px 14px;
 			font-size: 15px;
 			line-height: normal;
-			-webkit-border-radius: 5px;
-			-moz-border-radius: 5px;
-			border-radius: 5px;
+			-webkit-border-radius: 10px;
+			-moz-border-radius: 10px;
+			border-radius: 10px;
 		}
 
+		text-align: right;
 
 		* {
 			-webkit-box-sizing: border-box;
@@ -119,7 +120,7 @@
 
 		.input {
 			position: absolute;
-			top: 50%;
+			top: 40%;
 			left: 40%;
 			margin: -200px;
 			width: 500px;
@@ -130,7 +131,7 @@
 
 		.dia_puppy {
 			position: absolute;
-			top: 35%;
+			top: 24%;
 			left: 60%;
 			margin: -200px;
 			width: 30%;
@@ -156,9 +157,11 @@
 			transition: box-shadow .5s ease;
 		}
 
+
 		input:focus {
 			box-shadow: inset 0 -5px 45px rgba(100, 100, 100, 0.4), 0 1px 1px rgba(255, 255, 255, 0.2);
 		}
+
 
 		.fa {
 			padding: 20px;
@@ -168,47 +171,78 @@
 			text-decoration: none;
 			margin: 5px 2px;
 		}
+
+
+		.social-container {
+			position: relative;
+			color: #b9ddbc;
+			text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+			letter-spacing: 1px;
+			text-align: center;
+			top: 70%;
+			margin-top: 10px;
+		}
+
+
+		.prediction {
+			position: relative;
+			color: #b9ddbc;
+			text-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+			letter-spacing: 1px;
+			text-align: center;
+			top: 60%;
+			margin-top: 10px;
+		}
 	</style>
 
 
 </head>
 
 <body>
-	<h1>Know your Diabetes level using AI</h1>
+	<h1>know if you are Diabetic using AI</h1>
 	<div class="input">
 		<form action="{{ url_for('predict')}}" method="post">
+
 			<label for="pregnancies">Number of Pregnancies</label>
-			<input class="form-input" type="text" name="pregnancies" placeholder=" example 0 "><br>
+			<input class="form-input" type="text" name="pregnancies" placeholder=" example 1"><br>
+
 			<label for="glucose">Glucose (mg/dL)</label>
-			<input class="form-input" type="text" name="glucose" placeholder=" example 80"><br>
+			<input class="form-input" type="text" name="glucose" placeholder=" example 108"><br>
 
-			<label for="pregnancies">Blood Pressure (mmHg)</label>
-			<input class="form-input" type="text" name="bloodpressure" placeholder=" example 80"><br>
+			<label for="bloodpressure">Blood Pressure (mmHg)</label>
+			<input class="form-input" type="text" name="bloodpressure" placeholder=" example 88"><br>
 
-			<label for="pregnancies">Skin Thickness (mm)</label>
-			<input class="form-input" type="text" name="skinthickness" placeholder=" example 20"><br>
+			<label for="skinthickness">Skin Thickness (mm)</label>
+			<input class="form-input" type="text" name="skinthickness" placeholder=" example 39"><br>
 
-			<label for="pregnancies">Insulin Level (IU/mL)</label>
-			<input class="form-input" type="text" name="insulin" placeholder=" example 80"><br>
+			<label for="insulin">Insulin Level (IU/mL)</label>
+			<input class="form-input" type="text" name="insulin" placeholder=" example 74"><br>
 
-			<label for="pregnancies">Body Mass Index (kg/m²)</label>
-			<input class="form-input" type="text" name="bmi" placeholder=" example 23.1"><br>
+			<label for="bmi">Body Mass Index (kg/m²)</label>
+			<input class="form-input" type="text" name="bmi" placeholder=" example 28.4"><br>
 
-			<label for="pregnancies">Diabetes Pedigree Function</label>
-			<input class="form-input" type="text" name="dpf" placeholder=" example 0.52"><br>
+			<label for="dpf">Diabetes Pedigree Function</label>
+			<input class="form-input" type="text" name="dpf" placeholder=" example 0.261"><br>
 
-			<label for="pregnancies">Age (years)</label>
+			<label for="age">Age (years)</label>
 			<input class="form-input" type="text" name="age" placeholder=" example 34"><br>
 			<button type="submit" class="btn form-submit-button btn-large">Predict</button>
+
 		</form>
 		<br>
 		<br>
-		{{ prediction_text }}
+	</div>
 
-		<div class="social-container">
-			By Sourav <a href="#" class="fa fa-github"></a>
-		</div>
+	<div class="prediction">
+		{% if prediction==1 %}
+		<h2>Sorry, you are Diabetic!</h2>
+		{% elif prediction==0 %}
+		<h2>Cheers, you aren't Diabetic!</h2>
+		{% endif %}
+	</div>
 
+	<div class="social-container">
+		By Sourav <a href="#" class="fa fa-github"></a>
 	</div>
 
 	<div class="dia_puppy">
